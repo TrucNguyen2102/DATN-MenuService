@@ -16,6 +16,10 @@ public class Menu {
     @Column(name = "price")
     private Double price;
 
+    public Menu() {
+
+    }
+
     public Menu(Integer id, String itemName, Double price) {
         this.id = id;
         this.itemName = itemName;
