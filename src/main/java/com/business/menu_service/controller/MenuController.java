@@ -2,6 +2,7 @@ package com.business.menu_service.controller;
 
 import com.business.menu_service.dto.MenuDTO;
 import com.business.menu_service.entity.Menu;
+import com.business.menu_service.repository.MenuRepo;
 import com.business.menu_service.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ import java.util.List;
 public class MenuController {
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private MenuRepo menuRepo;
 
     @PostMapping("/add")
     public ResponseEntity<Menu> addMenu(@RequestBody MenuDTO menuDTO) {
@@ -46,6 +50,19 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Trả về lỗi 500 (Internal Server Error)
+        }
+
+    }
+
+    // API kiểm tra món ăn có tồn tại trong cơ sở dữ liệu hay không
+    @GetMapping("/{menuId}")
+    public ResponseEntity<Boolean> checkMenuExistence(@PathVariable Integer menuId) {
+        try {
+            boolean exists = menuRepo.existsById(menuId);
+            return ResponseEntity.ok(exists);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
     }

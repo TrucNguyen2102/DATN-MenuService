@@ -21,6 +21,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/menus/add").permitAll()
                         .requestMatchers("/api/menus/all").permitAll()
+                        .requestMatchers("/api/menus/{menuId}").permitAll()
                         .requestMatchers("/api/menus/update/{id}").permitAll()
                         .requestMatchers("/api/menus/delete/{id}").permitAll()
 
