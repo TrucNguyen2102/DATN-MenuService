@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/menus")
@@ -19,6 +20,16 @@ public class MenuController {
 
     @Autowired
     private MenuRepo menuRepo;
+
+    @GetMapping("/endpoints")
+    public List<Map<String, String>> getEndpoints() {
+        return List.of(
+                Map.of("service", "menu-service", "method", "GET", "url", "/api/menus/all"),
+                Map.of("service", "menu-service", "method", "POST", "url", "/api/menus/add"),
+                Map.of("service", "menu-service", "method", "PUT", "url", "/api/menus/update/{id}"),
+                Map.of("service", "menu-service", "method", "DELETE", "url", "/api/menus/delete/{id}")
+        );
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Menu> addMenu(@RequestBody MenuDTO menuDTO) {

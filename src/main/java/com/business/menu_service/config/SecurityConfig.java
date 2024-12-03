@@ -19,6 +19,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/menus/endpoints").permitAll()
                         .requestMatchers("/api/menus/add").permitAll()
                         .requestMatchers("/api/menus/all").permitAll()
                         .requestMatchers("/api/menus/{menuId}").permitAll()
