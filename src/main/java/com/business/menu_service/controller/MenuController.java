@@ -5,6 +5,8 @@ import com.business.menu_service.entity.Menu;
 import com.business.menu_service.repository.MenuRepo;
 import com.business.menu_service.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +65,14 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Trả về lỗi 500 (Internal Server Error)
         }
 
+    }
+
+    @GetMapping("/pages/all")
+    public ResponseEntity<Page<Menu>> getAllMenus(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Page<Menu> menuPage = menuService.getAllMenus(page, size);
+        return ResponseEntity.ok(menuPage);
     }
 
     // API kiểm tra món ăn có tồn tại trong cơ sở dữ liệu hay không

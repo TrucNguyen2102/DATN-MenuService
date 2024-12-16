@@ -4,6 +4,9 @@ import com.business.menu_service.entity.Menu;
 import com.business.menu_service.exception.ResourceNotFoundException;
 import com.business.menu_service.repository.MenuRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,12 @@ public class MenuServiceImpl implements MenuService{
     @Autowired
     private MenuRepo menuRepo;
 
+
+    @Override
+    public Page<Menu> getAllMenus(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return menuRepo.findAll(pageable);
+    }
 
     @Override
     public List<Menu> getAllMenus() {
